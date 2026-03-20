@@ -113,4 +113,9 @@ public class ApproverController : Controller
 
         return RedirectToAction("ApproveRequest");
     }
+
+    public IActionResult DenyRequest()
+    {
+        return View();
+    }
 }
