@@ -114,8 +114,35 @@ public class ApproverController : Controller
         return RedirectToAction("ApproveRequest");
     }
 
-    public IActionResult DenyRequest()
+    [HttpGet]
+    public IActionResult DenyRequest(int requestId)
     {
-        return View();
+        var request = _context.Requests.Find(requestId);
+        return View(request);
+    }
+
+    [HttpPost]
+    public IActionResult DenyRequest(int requestId, string reason)
+    {
+        var request = _context.Requests.Find(requestId);
+
+        if (request.Approval == null)
+        {
+            request.Approval = new Approval
+            {
+                Request = request,
+                RejectedReason = reason,
+                Approved = false,
+                Timestamp = DateTime.Now
+            };
+        }
+        else
+        {
+        request.Approval.Approved = false;
+        request.Approval.RejectedReason = reason;
+        request.Approval.Timestamp = DateTime.Now;
+        }
+
+        return RedirectToAction("ApproveRequest");
     }
 }

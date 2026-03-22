@@ -14,6 +14,7 @@
                 <tr>
                     <th>Dataset Requested</th>
                     <th>User</th>
+                    <th>Reason</th>
                     <th>Date Requested</th>
                     <th colspan="2">Action</th>
                 </tr>
@@ -23,7 +24,8 @@
                 {
                     <tr>
                         <td>@request.Title</td>
-                        <td>@request.User</td>
+                        <td>@request.Username</td>
+                        <td>@request.Reason</td>
                         <td>@request.Timestamp</td>
 
                         <td>
@@ -34,9 +36,9 @@
                         </td>
 
                         <td>
-                            <form asp-action="DenyRequest" method="post">
+                            <form asp-action="DenyRequest" method="get">
                                 <input type="hidden" name="requestId" value="@request.Id" />
-                                <button type="submit" class="input-button">Deny</button>
+                                <button type="submit" class="deny-button"">Deny</button>
                             </form>
                         </td>
                     </tr>
