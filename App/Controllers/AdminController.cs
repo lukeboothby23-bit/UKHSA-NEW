@@ -3,8 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
-using App.Models;
-using System.Security.Principal;
+using UKHSA.Models;
 
 namespace App.Controllers;
 
