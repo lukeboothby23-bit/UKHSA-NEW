@@ -133,14 +133,14 @@ public class ApproverController : Controller
                 Request = request,
                 RejectedReason = reason,
                 Approved = false,
-                Timestamp = DateTime.Now
+                Timestamp = DateTime.UtcNow
             };
         }
         else
         {
         request.Approval.Approved = false;
         request.Approval.RejectedReason = reason;
-        request.Approval.Timestamp = DateTime.Now;
+        request.Approval.Timestamp = DateTime.UtcNow;
         }
 
         return RedirectToAction("ApproveRequest");
