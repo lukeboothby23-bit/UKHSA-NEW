@@ -23,9 +23,8 @@
                 @foreach (var request in Model.Items)
                 {
                     <tr>
-                        <td>@request.Title</td>
-                        <td>@request.Username</td>
-                        <td>@request.Reason</td>
+                        <td>@request.Dataset?.Title</td>
+                        <td>@request.User</td>
                         <td>@request.Timestamp</td>
 
                         <td>
@@ -38,7 +37,7 @@
                         <td>
                             <form asp-action="DenyRequest" method="get">
                                 <input type="hidden" name="requestId" value="@request.Id" />
-                                <button type="submit" class="deny-button"">Deny</button>
+                                <button type="submit" class="input-button">Deny</button>
                             </form>
                         </td>
                     </tr>
