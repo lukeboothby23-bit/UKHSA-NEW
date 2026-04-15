@@ -1,6 +1,5 @@
-@using App.Models
-@using App.Shared
-@model Paginated<RequestsDto>
+@model RequestsDto
+
 @{
   ViewData["Title"] = "My Requests Page";
 }
@@ -31,7 +30,7 @@
             <td>@request.Reason</td>
             <td>@request.ReqTime</td>
             <td>@request.AppTime</td>
-            <td>@request.ExpTime</td>
+            <td>@request.AppExp</td>
             <td> <button class="input-button">Extension</button></td>
             <td><button class="input-button" @request.ViewDataset>View Dataset</button></td>
           </tr>
@@ -48,7 +47,7 @@
 
       @if (Model.CurrentPage < Model.TotalPages)
       {
-        <a asp-action="Requests" asp-route-page="@(Model.CurrentPage + 1)">Next</a>
+      <a asp-action="Requests" asp-route-page="@(Model.CurrentPage + 1)">Next</a>
       }
     </div>
   </div>
