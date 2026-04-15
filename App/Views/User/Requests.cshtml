@@ -26,12 +26,12 @@
         @foreach (var request in Model.Items)
         {
           <tr>
-            <td>@request.Dataset?.Title</td>
-            <td>@request.Approval?.Approved</td>
-            <td>@request.Approval?.RejectedReason</td>
-            <td>@request.Timestamp</td>
-            <td>@request.Approval?.Timestamp</td>
-            <td>@request.Approval?.Expires</td>
+            <td>@request.Title</td>
+            <td>@request.Approved</td>
+            <td>@request.Reason</td>
+            <td>@request.ReqTime</td>
+            <td>@request.AppTime</td>
+            <td>@request.ExpTime</td>
             <td> <button class="input-button">Extension</button></td>
             <td><button class="input-button" @request.ViewDataset>View Dataset</button></td>
           </tr>
