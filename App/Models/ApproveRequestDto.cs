@@ -1,7 +1,7 @@
 namespace App.Models;
 using System.ComponentModel.DataAnnotations;
 
-class ApproveRequestDto
+public class ApproveRequestDto
 {
     public int User{ get; set; }
     public int Id { get; set; }

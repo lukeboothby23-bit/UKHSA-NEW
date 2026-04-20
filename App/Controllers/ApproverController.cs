@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
@@ -42,13 +43,43 @@ public class ApproverController : Controller
             Items = ApproveRequest,
         };
 
-        return View(model);
+        return View (model);
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        var request = _context.Requests
+        .Include(r => r.Approval)
+        .FirstOrDefault(r => r.Id == requestId);
+
+
+        if (request == null)
+        {
+        return RedirectToAction (nameof(ApproveRequest));
+        }
+
+        if (request.Approval == null)
+        {
+            request.Approval = new Approval
+            {
+                Request = request,
+                Approved = true,
+                RejectedReason = "",
+                Timestamp = DateTime.UtcNow,
+                Expires = DateTime.UtcNow.AddMonths(6)
+            };
+        }
+        else
+        {
+        request.Approval.Approved = true;
+        request.Approval.RejectedReason = "";
+        request.Approval.Timestamp = DateTime.UtcNow;
+        }
+
+        _context.SaveChanges();
+
+        return RedirectToAction("ApproveRequest");
     }
 
     [HttpGet]

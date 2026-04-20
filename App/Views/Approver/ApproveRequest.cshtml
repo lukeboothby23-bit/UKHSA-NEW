@@ -1,3 +1,6 @@
+@using UKHSA.Models
+@using UKHSA.Shared
+@model Paginated<ApproveRequestDto>
 @{
     ViewData["Title"] = "Approve Requests Page";
 }
@@ -31,7 +34,7 @@
                         </td>
 
                         <td>
-                            <form asp-action="DenyRequest" method="get">
+                            <form asp-action="DenyRequest" method="post">
                                 <input type="hidden" name="requestId" value="@request.Id" />
                                 <button type="submit" class="input-button">Deny</button>
                             </form>
