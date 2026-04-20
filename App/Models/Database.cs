@@ -48,7 +48,7 @@ public class Approval
     public bool Approved { get; set; }
     public DateTime Timestamp { get; set; }
     public DateTime Expires { get; set; }
-    public required string RejectedReason { get; set; }
+    public string? RejectedReason { get; set; }
 
     public int RequestId { get; set; }
     [ForeignKey(nameof(RequestId))]

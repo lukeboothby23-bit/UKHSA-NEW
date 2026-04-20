@@ -36,8 +36,8 @@ public class UserController : Controller
                             select new RequestsDto
                             {
                                 Title = d.Title,
-                                Approved = false,
-                                Reason = "Pending",
+                                Approved = a!= null ? a.Approved : false,
+                                Reason = a != null ? a.RejectedReason : "Unclear",
                                 ReqTime = r.Timestamp,
                                 AppTime = DateTime.MinValue,
                                 AppExp = DateTime.MinValue
