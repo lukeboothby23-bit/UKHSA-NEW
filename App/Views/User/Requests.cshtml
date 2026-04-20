@@ -27,7 +27,7 @@
         {
           <tr>
             <td>@request.Title</td>
-            <td>@request.Approved</td>
+            <td>@(request.Approved ? "Approved" : "Denied")</td>
             <td>@request.Reason</td>
             <td>@request.ReqTime</td>
             <td>@request.AppTime</td>
