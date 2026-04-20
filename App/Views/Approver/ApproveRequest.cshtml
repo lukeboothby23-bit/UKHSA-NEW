@@ -35,7 +35,7 @@
                         </td>
 
                         <td>
-                            <form asp-action="DenyRequest" method="get">
+                            <form asp-action="DenyRequest" method="post">
                                 <input type="hidden" name="requestId" value="@request.Id" />
                                 <button type="submit" class="input-button">Deny</button>
                             </form>

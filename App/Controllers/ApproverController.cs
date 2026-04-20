@@ -46,17 +46,20 @@ public class ApproverController : Controller
             Items = ApproveRequest,
         };
 
-        return RedirectToAction("ApproveRequest");
+        return View (model);
     }
 
     [HttpPost]
     public IActionResult ApproveRequest(int requestId)
     {
-        var request = _context.Requests.Find(requestId);
+        var request = _context.Requests
+        .Include(r => r.Approval)
+        .FirstOrDefault(r => r.Id == requestId);
+
 
         if (request == null)
         {
-        return View (model);
+        return RedirectToAction (nameof(ApproveRequest));
         }
 
         if (request.Approval == null)
@@ -65,15 +68,15 @@ public class ApproverController : Controller
             {
                 Request = request,
                 Approved = true,
-                RejectedReason = null,
+                RejectedReason = "",
                 Timestamp = DateTime.UtcNow,
-                Expires = DateTime.UtcNow.AddYears(1)
+                Expires = DateTime.UtcNow.AddMonths(6)
             };
         }
         else
         {
         request.Approval.Approved = true;
-        request.Approval.RejectedReason = null;
+        request.Approval.RejectedReason = "";
         request.Approval.Timestamp = DateTime.UtcNow;
         }
 
