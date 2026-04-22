@@ -102,23 +102,6 @@ html {
   transition: background-color 0.2s;
 }
 
-<<<<<<< HEAD
-.text-area {
-  border: solid 2px;
-  display: block;
-  margin: auto;
-  width: auto;
-  resize: vertical;
-}
-
-.text-area:hover {
-  border: solid 3px;
-  outline: solid 3px var(--hover-yellow);
-  display: block;
-  margin: auto;
-  width: auto;
-  resize: vertical;
-=======
 .input-button:disabled {
   display: block;
   margin: auto;
@@ -131,7 +114,6 @@ html {
   box-shadow: 0px 0px 0px var(--shadow) !important;
   transition: box-shadow 0.2s, background-color 0.2s;
   
->>>>>>> dfd2a3eb1b193a2958be12a00f761c41642857c6
 }
 
 select {

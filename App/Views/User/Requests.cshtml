@@ -1,11 +1,10 @@
-@using UKHSA.Models
-@using UKHSA.Shared
+@using App.Models
+@using App.Shared
 @model Paginated<RequestsDto>
 @{
   ViewData["Title"] = "My Requests Page";
 }
 
-<<<<<<< HEAD
 <div class="text-center">
   <br />
   <div class="table-container">
@@ -20,33 +19,12 @@
           <th>Approved Date</th>
           <th>Expiry Date</th>
           <th>Request Extension</th>
+          <th>View Dataset</th>
         </tr>
       </thead>
       <tbody>
         @foreach (var request in Model.Items)
         {
-=======
-  <div class="text-center">
-    <br />
-    <div class="table-container">
-      <h1>My Requests</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>Dataset</th>
-            <th>Status</th>
-            <th>Notes</th>
-            <th>Requested Date</th>
-            <th>Approved Date</th>
-            <th>Expiry Date</th>
-            <th>Request Extension</th>
-            <th>View Dataset</th>
-          </tr>
-        </thead>
-        <tbody>
-          @foreach (var request in Model.Items)
-          {
->>>>>>> dfd2a3eb1b193a2958be12a00f761c41642857c6
           <tr>
             <td>@request.Title</td>
             <td>@request.Approved</td>
@@ -70,7 +48,7 @@
 
       @if (Model.CurrentPage < Model.TotalPages)
       {
-      <a asp-action="Requests" asp-route-page="@(Model.CurrentPage + 1)">Next</a>
+        <a asp-action="Requests" asp-route-page="@(Model.CurrentPage + 1)">Next</a>
       }
     </div>
   </div>
