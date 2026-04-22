@@ -33,8 +33,6 @@ var headerAnchors = new List<IHtmlContent>();
   {
   headerAnchors.Add(Html.ActionLink("Log in", "Login", "Account", null, new { @@class = "nav-link" }));
   headerAnchors.Add(Html.ActionLink("Register", "Register", "Account", null, new { @@class = "nav-link" }));
-<<<<<<< HEAD
-=======
   } else if (User.IsInRole("Admin"))
   {
   headerAnchors.Add(Html.ActionLink("GOV·UK", "Home", "Admin", null, new { @class = "nav-link" }));
@@ -49,7 +47,6 @@ var headerAnchors = new List<IHtmlContent>();
   headerAnchors.Add(Html.ActionLink("GOV·UK", "Home", "User", null, new { @class = "nav-link" }));
   headerAnchors.Add(Html.ActionLink("My Requests", "Requests", "User", null, new { @class = "nav-link" }));
   headerAnchors.Add(Html.ActionLink("Request Dataset", "RequestDocument", "User", null, new {@class = "nav-link"}));
->>>>>>> dfd2a3eb1b193a2958be12a00f761c41642857c6
   }
   }
 
