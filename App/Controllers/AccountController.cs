@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
-using UKHSA.Models;
+using App.Models;
 
-namespace UKHSA.Controllers;
+namespace App.Controllers;
 
 public class AccountController : Controller
 {

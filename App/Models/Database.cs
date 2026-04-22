@@ -1,4 +1,4 @@
-namespace UKHSA.Models;
+namespace App.Models;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
 

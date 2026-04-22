@@ -1,6 +1,6 @@
-namespace UKHSA.Controllers;
+namespace App.Controllers;
 
-using UKHSA.Models;
+using App.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 

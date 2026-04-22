@@ -2,10 +2,10 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
-using UKHSA.Models;
-using UKHSA.Shared;
+using App.Models;
+using App.Shared;
 
-namespace UKHSA.Controllers;
+namespace App.Controllers;
 
 [Authorize(Roles = "Approver, Admin")]
 public class ApproverController : Controller

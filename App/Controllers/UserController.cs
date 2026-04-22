@@ -2,10 +2,11 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using UKHSA.Models;
-using UKHSA.Shared;
+using App.Models;
+using App.Shared;
+using App.Controllers;
 
-namespace UKHSA.Controllers;
+namespace App.Controllers;
 
 //[Authorize(Roles = "User")]
 public class UserController : Controller
@@ -21,7 +22,7 @@ public class UserController : Controller
 
     public IActionResult Home()
     {
-        return View();
+        return View("Home");
     }
 
     public IActionResult Requests(int page = 1, int perPage = 20)

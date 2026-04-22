@@ -1,4 +1,4 @@
-namespace UKHSA.Shared;
+namespace App.Shared;
 
 public class Paginated<T>
 {

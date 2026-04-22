@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
-using UKHSA.Controllers;
-using UKHSA.Models;
+using App.Controllers;
+using App.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +12,7 @@ var ConnectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<UKHSA_DbContext>(options => options.UseNpgsql(ConnectionString));
 
 builder.Services
-.AddIdentity<UKHSA.Models.User, IdentityRole>(options =>
+.AddIdentity<App.Models.User, IdentityRole>(options =>
 {
     options.User.RequireUniqueEmail = true;
 
