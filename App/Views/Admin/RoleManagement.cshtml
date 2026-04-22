@@ -1,0 +1,46 @@
+@{
+  ViewData["Title"] = "Role Management";
+}
+
+<div class="input-box">
+
+    <h1> Manage Roles</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>UserID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>User</th>
+                <th>Approver</th>
+                <th>Admin</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <form>
+                <td>1</td>
+                
+                <td>Luke Boothby</td>
+
+                <td>luke@luke.com</td>
+                
+                <td>
+                    <input id="admin" type="checkbox" />
+                </td>
+                <td>
+                    <input id="approver" type="checkbox" />
+                </td>
+                <td>
+                    <input id="user" type="checkbox" />
+                </td>
+                <td>
+                    <button class="input-button" type="submit">Submit Changes</button>
+                </td>
+                </form>
+            </tr>
+        </tbody>
+    </table>
+</div>

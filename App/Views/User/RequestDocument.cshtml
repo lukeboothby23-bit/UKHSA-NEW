@@ -1,0 +1,41 @@
+@model List<Dataset>
+
+@{
+  ViewData["Title"] = "Request Document Page";
+}
+
+<div class="text-center">
+  <br />
+  <div class="login-container">
+    <h1>Request Dataset</h1>
+    <form asp-action="RequestDocument" method="post">
+
+      <h3>Select Dataset</h3>
+      <select name="DatasetId">
+      <option value="">Select a dataset</option>
+      @foreach (var item in Model)
+      {
+        <option value="@item.Id">@item.Title</option>
+      }
+      </select>
+
+      <h3>Access Type</h3>
+
+      <div class="radio-button">
+      <div class="radio-item">
+      <input type="radio" id="sensitive" name="AccessLevel" value="1"/>
+      <label for="sensitive">Sensitive</label>
+      </div>
+      
+      <div class="radio-item">
+      <input type="radio" id="non-sensitive" name="AccessLevel" value="0"/>
+      <label for="non-sensitive">Non-sensitive</label>
+      </div>
+      </div>
+
+      <h3 style="margin-top: 2em;">Purpose</h3>
+      <textarea class="text-area" name="Purpose" rows="4" cols="41"></textarea>
+      <button class="input-button" type="submit" style="margin-top: 2em;">Request Dataset</button>
+    </form>
+  </div>
+</div>
