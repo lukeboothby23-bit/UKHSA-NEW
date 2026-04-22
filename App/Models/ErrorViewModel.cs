@@ -1,4 +1,4 @@
-namespace App.Models;
+namespace UKHSA.Models;
 
 public class ErrorViewModel
 {
