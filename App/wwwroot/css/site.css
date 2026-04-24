@@ -37,32 +37,25 @@ html {
   border-radius: 0px;
 }
 
-/*text input*/
-.text-input {
+/*input box*/
+.login-container input[type="text"],
+.input-box {
   display: block;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0 auto 10px auto;
   width: calc(100% - 22px);
   text-align: left;
   margin-bottom: 10px;
   border: solid 2px;
   border-radius: 0px;
-  padding: 3px;
+  padding: 5px;
   font-size: 15px;
+  appearance: none;
 }
 
-.text-input:hover {
+.login-container input[type="text"]:hover,
+.input-box:hover, .input-box:focus{
   border: solid 3px;
   outline: solid 3px var(--hover-yellow);
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: calc(100% - 22px);
-  text-align: left;
-  margin-bottom: 10px;
-  border-radius: 0px;
-  padding: 3px;
-  font-size: 15px;
 }
 
 /*input button*/
@@ -229,23 +222,13 @@ input[type="checkbox"]:checked {
   border-radius: 0px;
   resize: vertical;
   padding: 3px;
-  font-size: 15;
+  font-size: 15px;
+  appearance: none;
 }
 
-.text-area:hover {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: calc(100% - 22px);
-  height: 30px;
-  text-align: left;
-  margin-bottom: 10px;
-  border: solid 2px;
-  border-radius: 0px;
-  outline: solid 3px var(--hover-yellow);
-  resize: vertical;
-  padding: 3px;
-  font-size: 15;
+.text-area:hover, .text-area:focus {
+   border: solid 2px;
+   outline: solid 3px var(--hover-yellow);
 }
 
 
