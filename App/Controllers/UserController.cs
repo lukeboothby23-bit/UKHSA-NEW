@@ -2,9 +2,9 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using App.Models;
-using App.Shared;
-using App.Controllers;
+using UKHSA.Models;
+using UKHSA.Shared;
+using System.Threading.Tasks;
 
 namespace App.Controllers;
 
@@ -25,29 +25,30 @@ public class UserController : Controller
         return View("Home");
     }
 
-    public IActionResult Requests(int page = 1, int perPage = 20)
+    public IActionResult Requests(int page = 1, int perPage = 5)
     {
 
         var UserRequests = (from r in _context.Requests
                             join d in _context.Datasets on r.DatasetId equals d.Id
                             //join a in _context.Approvals on r.Id equals a.RequestId
                             where r.UserId == _userManager.GetUserId(User)
-                            orderby r.Timestamp
+                            orderby r.Timestamp descending
                             select new RequestsDto
                             {
                                 Title = d.Title,
-                                Approved = a!= null ? a.Approved : null,
+                                Approved = a != null ? a.Approved : null,
                                 Reason = a != null ? (a.Approved ? "" : a.RejectedReason) : "Pending",
                                 ReqTime = r.Timestamp,
-                                AppTime = a != null ? a.Timestamp: null,
-                                AppExp = a != null ? a.Expires: null,
-                                ViewDataset = (r.Approval.Approved != null && r.Approval.Approved != false) ? String.Empty : "disabled" 
+                                AppTime = a != null ? a.Timestamp : null,
+                                AppExp = a != null ? a.Expires : null,
+                                ViewDataset = (r.Approval.Approved != null && r.Approval.Approved != false) ? String.Empty : "disabled"
                             }).ToList();
-        
+
         int totalItems = UserRequests.Count();
         Console.WriteLine(totalItems);
 
-        var model = new Paginated<RequestsDto> {
+        var model = new Paginated<RequestsDto>
+        {
             CurrentPage = page,
             PerPage = perPage,
             TotalItems = totalItems,
@@ -65,18 +66,34 @@ public class UserController : Controller
     }
 
     [HttpPost]
-        public IActionResult RequestDocument(int DatasetId, int AccessLevel, string Purpose)
+    public async Task<IActionResult> RequestDocument(int DatasetId, int AccessLevel, string Purpose)
     {
+        var userId = _userManager.GetUserId(User);
+        var dataset = await _context.Datasets.FindAsync(DatasetId);
+
         var request = new Request
         {
             DatasetId = DatasetId,
-            
-            UserId = _userManager.GetUserId(User),
+            UserId = userId,
             Timestamp = DateTime.UtcNow
         };
-
         _context.Requests.Add(request);
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
+        
+
+        if (AccessLevel == 0)
+        {
+            var approval = new Approval
+            {
+                Request = request,
+                Approved = true,
+                RejectedReason = "",
+                Timestamp = DateTime.UtcNow,
+                Expires = DateTime.UtcNow.AddMonths(6)
+            };
+            _context.Approvals.Add(approval);
+            await _context.SaveChangesAsync();
+        }
 
         return RedirectToAction("Requests");
     }

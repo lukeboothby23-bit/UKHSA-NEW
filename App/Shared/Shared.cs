@@ -17,6 +17,6 @@ public class Paginated<T>
 
     public int TotalItems { get; set; }
     public int CurrentPage { get; set; } = 1;
-    public int PerPage { get; set; } = 20;
+    public int PerPage { get; set; } = 5;
     public int TotalPages => (int)Math.Ceiling(TotalItems / (double)PerPage);
 }

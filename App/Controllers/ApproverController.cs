@@ -53,7 +53,7 @@ public class ApproverController : Controller
     }
 
     [HttpGet]
-    public IActionResult ApproveRequest(int page = 1, int perPage = 20)
+    public IActionResult ApproveRequest(int page = 1, int perPage = 5)
     {
         var ApproveRequest = (from r in _context.Requests
                               join d in _context.Datasets on r.DatasetId equals d.Id
