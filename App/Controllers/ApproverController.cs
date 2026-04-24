@@ -99,7 +99,8 @@ public class ApproverController : Controller
             approval.Approved = false;
             approval.RejectedReason = reason;
             approval.Timestamp = DateTime.UtcNow;
-                    }
+            approval.Expires = DateTime.UtcNow.AddMonths(6);
+        }
         else
         {
             request.Approval = new Approval
@@ -108,6 +109,7 @@ public class ApproverController : Controller
                 Approved = false,
                 RejectedReason = reason,
                 Timestamp = DateTime.UtcNow,
+                Expires = DateTime.UtcNow.AddMonths(6)
             };
         }
         _context.SaveChanges();

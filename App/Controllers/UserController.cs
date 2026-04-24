@@ -41,7 +41,7 @@ public class UserController : Controller
                                 ReqTime = r.Timestamp,
                                 AppTime = a != null ? a.Timestamp: null,
                                 AppExp = a != null ? a.Expires: null,
-                                ViewDataset = r.Approval != null ? String.Empty : "disabled" 
+                                ViewDataset = (r.Approval.Approved != null && r.Approval.Approved != false) ? String.Empty : "disabled" 
                             }).ToList();
         
         int totalItems = UserRequests.Count();
@@ -70,6 +70,7 @@ public class UserController : Controller
         var request = new Request
         {
             DatasetId = DatasetId,
+            
             UserId = _userManager.GetUserId(User),
             Timestamp = DateTime.UtcNow
         };
