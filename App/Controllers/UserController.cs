@@ -40,7 +40,7 @@ public class UserController : Controller
                                 Reason = a != null ? (a.Approved ? "" : a.RejectedReason) : "Pending",
                                 ReqTime = r.Timestamp,
                                 AppTime = a != null ? a.Timestamp : null,
-                                AppExp = a != null ? a.Expires : null,
+                                AppExp = (a != null && a.Approved == true)? a.Expires : null,
                                 ViewDataset = (r.Approval.Approved != null && r.Approval.Approved != false) ? String.Empty : "disabled"
                             }).ToList();
 
