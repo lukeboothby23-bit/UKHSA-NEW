@@ -3,6 +3,9 @@ using System.ComponentModel.DataAnnotations;
 
 public class RequestsDto
 {
+    public int Id {get; set;}
+    public int DatasetId {get; set;}
+    public int AccessLevel {get; set;}
     [Required]
     public required string Title {get; set;}
     [Required]

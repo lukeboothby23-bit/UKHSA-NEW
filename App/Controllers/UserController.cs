@@ -35,6 +35,10 @@ public class UserController : Controller
                             orderby r.Timestamp descending
                             select new RequestsDto
                             {
+                                Id = r.Id,
+                                DatasetId = d.Id,
+                                AccessLevel = d.AccessLevel,
+                                
                                 Title = d.Title,
                                 Approved = a != null ? a.Approved : null,
                                 Reason = a != null ? (a.Approved ? "" : a.RejectedReason) : "Pending",
@@ -77,6 +81,40 @@ public class UserController : Controller
             UserId = userId,
             Timestamp = DateTime.UtcNow
         };
+        _context.Requests.Add(request);
+        await _context.SaveChangesAsync();
+        
+
+        if (AccessLevel == 0)
+        {
+            var approval = new Approval
+            {
+                Request = request,
+                Approved = true,
+                RejectedReason = "",
+                Timestamp = DateTime.UtcNow,
+                Expires = DateTime.UtcNow.AddMonths(6)
+            };
+            _context.Approvals.Add(approval);
+            await _context.SaveChangesAsync();
+        }
+
+        return RedirectToAction("Requests");
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Extension(int RequestId, int DatasetId, int AccessLevel)
+    {
+        var userId = _userManager.GetUserId(User);
+        var dataset = await _context.Datasets.FindAsync(DatasetId);
+
+        var request = new Request
+        {
+            DatasetId = DatasetId,
+            UserId = userId,
+            Timestamp = DateTime.UtcNow
+        };
+
         _context.Requests.Add(request);
         await _context.SaveChangesAsync();
         
