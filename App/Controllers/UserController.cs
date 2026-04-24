@@ -36,11 +36,12 @@ public class UserController : Controller
                             select new RequestsDto
                             {
                                 Title = d.Title,
-                                Approved = a!= null ? a.Approved : false,
-                                Reason = a != null ? a.RejectedReason : "Unclear",
+                                Approved = a!= null ? a.Approved : null,
+                                Reason = a != null ? (a.Approved ? "" : a.RejectedReason) : "Pending",
                                 ReqTime = r.Timestamp,
-                                AppTime = DateTime.MinValue,
-                                AppExp = DateTime.MinValue
+                                AppTime = a != null ? a.Timestamp: null,
+                                AppExp = a != null ? a.Expires: null,
+                                ViewDataset = r.Approval != null ? String.Empty : "disabled" 
                             }).ToList();
         
         int totalItems = UserRequests.Count();

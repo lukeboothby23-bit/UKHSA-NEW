@@ -11,7 +11,7 @@ namespace App.Controllers;
 [Authorize(Roles = "Approver, Admin")]
 public class ApproverController : Controller
 {
-     protected readonly UKHSA_DbContext _context;
+    protected readonly UKHSA_DbContext _context;
     private readonly UserManager<User> _userManager;
 
     public ApproverController(UKHSA_DbContext context, UserManager<User> userManager)
@@ -20,49 +20,23 @@ public class ApproverController : Controller
         _userManager = userManager;
     }
 
-    [HttpGet]
-    public IActionResult ApproveRequest(int page = 1, int perPage = 20)
-    {
-
-        //int totalItems = _context.Requests.Count();
-        //var requests = _context.Requests.ToList();
-        var ApproveRequest =    (from r in _context.Requests
-                                join d in _context.Datasets on r.DatasetId equals d.Id
-                                join u in _context.Users on r.UserId equals u.Id
-                                orderby r.Timestamp descending
-                                select new ApproveRequestDto
-                                {
-                                    Id = r.Id,
-                                    Title = d.Title,
-                                    Username = r.User.Forename + " " + r.User.Surname, // need to change
-                                    Timestamp = r.Timestamp
-                                }).ToList();
-        int totalItems = ApproveRequest.Count();
-
-        var model = new Paginated<ApproveRequestDto> {
-            CurrentPage = page,
-            PerPage = perPage,
-            TotalItems = totalItems,
-            Items = ApproveRequest,
-        };
-
-        return View (model);
-    }
-
     [HttpPost]
     public IActionResult ApproveRequest(int requestId)
     {
-        var request = _context.Requests
-        .Include(r => r.Approval)
-        .FirstOrDefault(r => r.Id == requestId);
+        var request = _context.Requests.Find(requestId);
+        var approvalList = _context.Approvals.Where(a => a.RequestId == requestId);
 
-
-        if (request == null)
+        if (approvalList.Any())
         {
-        return RedirectToAction (nameof(ApproveRequest));
-        }
+            var approval = approvalList.First();
 
-        if (request.Approval == null)
+            approval.Approved = true;
+            approval.RejectedReason = "";
+            approval.Timestamp = DateTime.UtcNow;
+            approval.Expires = DateTime.UtcNow.AddMonths(6);
+
+        }
+        else
         {
             request.Approval = new Approval
             {
@@ -73,16 +47,36 @@ public class ApproverController : Controller
                 Expires = DateTime.UtcNow.AddMonths(6)
             };
         }
-        else
-        {
-        request.Approval.Approved = true;
-        request.Approval.RejectedReason = "";
-        request.Approval.Timestamp = DateTime.UtcNow;
-        }
-
         _context.SaveChanges();
 
         return RedirectToAction("ApproveRequest");
+    }
+
+    [HttpGet]
+    public IActionResult ApproveRequest(int page = 1, int perPage = 20)
+    {
+        var ApproveRequest = (from r in _context.Requests
+                              join d in _context.Datasets on r.DatasetId equals d.Id
+                              where !_context.Approvals.Any(a => a.RequestId == r.Id)
+                              orderby r.Timestamp descending
+                              select new ApproveRequestDto
+                              {
+                                  Id = r.Id,
+                                  Title = d.Title,
+                                  Username = r.User.Forename + " " + r.User.Surname, // need to change
+                                  Timestamp = r.Timestamp
+                              }).ToList();
+        int totalItems = ApproveRequest.Count();
+
+        var model = new Paginated<ApproveRequestDto>
+        {
+            CurrentPage = page,
+            PerPage = perPage,
+            TotalItems = totalItems,
+            Items = ApproveRequest,
+        };
+
+        return View (model);
     }
 
     [HttpGet]
@@ -96,29 +90,34 @@ public class ApproverController : Controller
     public IActionResult DenyRequest(int requestId, string reason)
     {
         var request = _context.Requests.Find(requestId);
+        var approvalList = _context.Approvals.Where(a => a.RequestId == requestId);
 
-        if (request.Approval == null)
+        if (approvalList.Any())
+        {
+            var approval = approvalList.First();
+
+            approval.Approved = false;
+            approval.RejectedReason = reason;
+            approval.Timestamp = DateTime.UtcNow;
+                    }
+        else
         {
             request.Approval = new Approval
             {
                 Request = request,
-                RejectedReason = reason,
                 Approved = false,
-                Timestamp = DateTime.UtcNow
+                RejectedReason = reason,
+                Timestamp = DateTime.UtcNow,
             };
         }
-        else
-        {
-        request.Approval.Approved = false;
-        request.Approval.RejectedReason = reason;
-        request.Approval.Timestamp = DateTime.UtcNow;
-        }
+        _context.SaveChanges();
 
         _context.SaveChanges();
 
         return RedirectToAction("ApproveRequest");
     }
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });

@@ -27,7 +27,19 @@
         {
           <tr>
             <td>@request.Title</td>
-            <td>@(request.Approved ? "Approved" : "Denied")</td>
+            <td>@if (request.Approved == true)
+            {
+              <h4>Approved</h4>
+            } 
+            else if (request.Approved == false)
+            {
+              <h4>Denied</h4>
+            } 
+            else
+            {
+              <h4>Pending</h4>
+            }
+            </td>
             <td>@request.Reason</td>
             <td>@request.ReqTime</td>
             <td>@request.AppTime</td>
