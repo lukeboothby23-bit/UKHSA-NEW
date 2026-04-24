@@ -8,7 +8,7 @@ public class RequestsDto
     [Required]
     public required bool? Approved {get; set;}
     [Required]
-    public required string Reason {get; set;}
+    public required string? Reason {get; set;}
     [Required]
     public required DateTime ReqTime {get; set;}
     [Required]

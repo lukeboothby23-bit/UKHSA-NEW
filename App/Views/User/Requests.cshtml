@@ -29,15 +29,15 @@
             <td>@request.Title</td>
             <td>@if (request.Approved == true)
             {
-              <h4>Approved</h4>
+              <h4 style="color:#00703C"> Approved</h4> //green #00703C
             } 
             else if (request.Approved == false)
             {
-              <h4>Denied</h4>
+              <h4 style="color:#8A1538">Denied</h4> //red #8A1538
             } 
             else
             {
-              <h4>Pending</h4>
+              <h4 style="color:#ffdd00">Pending</h4> //yellow #ffdd00
             }
             </td>
             <td>@request.Reason</td>
