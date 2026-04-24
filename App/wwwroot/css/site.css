@@ -354,3 +354,32 @@ strong {
   box-shadow: 0px 3px 3px var(--shadow);
   transition: box-shadow 0.2s, background-color 0.2s;
 }
+
+.deny-button {
+  letter-spacing: 0.5px;
+  display: block;
+  margin: auto;
+  width: auto;
+  padding: 10px;
+  background-color: #8A1538;
+  color: white;
+  border: none;
+  border-bottom: solid 2px var(--button-border);
+  cursor: pointer;
+  box-shadow: none;
+  transition: box-shadow 0.4s, background-color 0.4s;
+}
+
+.deny-button:hover {
+  letter-spacing: 0.5px;
+  display: block;
+  margin: auto;
+  width: auto;
+  padding: 10px;
+  background-color: #751330;
+  color: white;
+  border: none;
+  border-bottom: solid 2px var(--button-border);
+  cursor: pointer;
+  transition: box-shadow 0.2s, background-color 0.2s;
+}
