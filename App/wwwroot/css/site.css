@@ -159,7 +159,7 @@ select:hover {
     margin-top: 0;
 
     border: 2px solid var(--button-border);
-    border-radius: 50%;
+    border-radius: 4px;
     background-color: white;
     display: grid;
     place-content: center;
@@ -169,7 +169,7 @@ select:hover {
     content: "";
     width: 13px;
     height: 13px;
-    border-radius: 50%;
+    border-radius: 4px;
     background-color: var(--button-border); 
 }
 
