@@ -25,7 +25,7 @@ public class Request
 
     public required string UserId { get; set; }
     public User? User { get; set; }
-
+    public string? Reason { get; set; }
     public int DatasetId { get; set; }
     public Dataset? Dataset { get; set; }
 

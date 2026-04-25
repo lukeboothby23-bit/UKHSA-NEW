@@ -79,6 +79,7 @@ public class UserController : Controller
         {
             DatasetId = DatasetId,
             UserId = userId,
+            Reason = Purpose,
             Timestamp = DateTime.UtcNow
         };
         _context.Requests.Add(request);

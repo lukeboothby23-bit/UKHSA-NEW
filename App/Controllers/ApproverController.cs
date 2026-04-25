@@ -64,6 +64,7 @@ public class ApproverController : Controller
                                   Id = r.Id,
                                   Title = d.Title,
                                   Username = r.User.Forename + " " + r.User.Surname, // need to change
+                                  Reason = r.Reason,
                                   Timestamp = r.Timestamp
                               }).ToList();
         int totalItems = ApproveRequest.Count();
