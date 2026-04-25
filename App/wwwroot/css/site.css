@@ -193,21 +193,36 @@ select:hover {
 }
 
 /*checkbox*/
-/*input:where([type="checkbox"]) {
+input:where([type="checkbox"]) {
   -webkit-appearance: none;
   appearance: none;
   width: 25px;
   height: 25px;
-  vertical-align: top;
+  vertical-align: middle;
   margin: calc(0.75em - 11px) 0.25rem 0 0;
-  border: 2px solid;;
-  background: #fff no-repeat center center;
+  border: 2px solid;
+  background: #fff;
+  cursor: pointer;
+  position: relative;
 }
 
-input[type="checkbox"]:checked {
-  
+input[type="checkbox"]:hover, 
+input[type="checkbox"]:focus {
+  border: solid 3px;
+  outline: solid 3px var(--hover-yellow);
 }
 
+ input[type="checkbox"]:checked::after {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 1px;
+  width: 6px;
+  height: 12px;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+  border-style: solid;
+ }
 
 /*text area*/
 .text-area {
