@@ -1,4 +1,4 @@
-namespace UKHSA.Models
+namespace App.Models
 {
     public class RoleManagementViewModel
     {

@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using UKHSA.Controllers;
+using App.Controllers;
 
 #nullable disable
 
-namespace UKHSA.Migrations
+namespace App.Migrations
 {
     [DbContext(typeof(UKHSA_DbContext))]
     partial class UKHSA_DbContextModelSnapshot : ModelSnapshot
@@ -154,7 +154,7 @@ namespace UKHSA.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("UKHSA.Models.Approval", b =>
+            modelBuilder.Entity("App.Models.Approval", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -186,7 +186,7 @@ namespace UKHSA.Migrations
                     b.ToTable("Approvals");
                 });
 
-            modelBuilder.Entity("UKHSA.Models.Dataset", b =>
+            modelBuilder.Entity("App.Models.Dataset", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -210,7 +210,7 @@ namespace UKHSA.Migrations
                     b.ToTable("Datasets");
                 });
 
-            modelBuilder.Entity("UKHSA.Models.Request", b =>
+            modelBuilder.Entity("App.Models.Request", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -240,7 +240,7 @@ namespace UKHSA.Migrations
                     b.ToTable("Requests");
                 });
 
-            modelBuilder.Entity("UKHSA.Models.User", b =>
+            modelBuilder.Entity("App.Models.User", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text");
@@ -323,7 +323,7 @@ namespace UKHSA.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("UKHSA.Models.User", null)
+                    b.HasOne("App.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -332,7 +332,7 @@ namespace UKHSA.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("UKHSA.Models.User", null)
+                    b.HasOne("App.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -347,7 +347,7 @@ namespace UKHSA.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("UKHSA.Models.User", null)
+                    b.HasOne("App.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -356,33 +356,33 @@ namespace UKHSA.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("UKHSA.Models.User", null)
+                    b.HasOne("App.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("UKHSA.Models.Approval", b =>
+            modelBuilder.Entity("App.Models.Approval", b =>
                 {
-                    b.HasOne("UKHSA.Models.Request", "Request")
+                    b.HasOne("App.Models.Request", "Request")
                         .WithOne("Approval")
-                        .HasForeignKey("UKHSA.Models.Approval", "RequestId")
+                        .HasForeignKey("App.Models.Approval", "RequestId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Request");
                 });
 
-            modelBuilder.Entity("UKHSA.Models.Request", b =>
+            modelBuilder.Entity("App.Models.Request", b =>
                 {
-                    b.HasOne("UKHSA.Models.Dataset", "Dataset")
+                    b.HasOne("App.Models.Dataset", "Dataset")
                         .WithMany("Requests")
                         .HasForeignKey("DatasetId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("UKHSA.Models.User", "User")
+                    b.HasOne("App.Models.User", "User")
                         .WithMany("Requests")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -393,17 +393,17 @@ namespace UKHSA.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("UKHSA.Models.Dataset", b =>
+            modelBuilder.Entity("App.Models.Dataset", b =>
                 {
                     b.Navigation("Requests");
                 });
 
-            modelBuilder.Entity("UKHSA.Models.Request", b =>
+            modelBuilder.Entity("App.Models.Request", b =>
                 {
                     b.Navigation("Approval");
                 });
 
-            modelBuilder.Entity("UKHSA.Models.User", b =>
+            modelBuilder.Entity("App.Models.User", b =>
                 {
                     b.Navigation("Requests");
                 });

@@ -2,8 +2,8 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using UKHSA.Models;
-using UKHSA.Shared;
+using App.Models;
+using App.Shared;
 using System.Threading.Tasks;
 
 namespace App.Controllers;
@@ -30,7 +30,8 @@ public class UserController : Controller
 
         var UserRequests = (from r in _context.Requests
                             join d in _context.Datasets on r.DatasetId equals d.Id
-                            //join a in _context.Approvals on r.Id equals a.RequestId
+                            join a in _context.Approvals on r.Id equals a.RequestId into Approvals
+                            from a in Approvals.DefaultIfEmpty()
                             where r.UserId == _userManager.GetUserId(User)
                             orderby r.Timestamp descending
                             select new RequestsDto
@@ -45,7 +46,7 @@ public class UserController : Controller
                                 ReqTime = r.Timestamp,
                                 AppTime = a != null ? a.Timestamp : null,
                                 AppExp = (a != null && a.Approved == true)? a.Expires : null,
-                                ViewDataset = (r.Approval.Approved != null && r.Approval.Approved != false) ? String.Empty : "disabled"
+                                ViewDataset = (a != null && a.Approved == true) ? String.Empty : "disabled"
                             }).ToList();
 
         int totalItems = UserRequests.Count();
