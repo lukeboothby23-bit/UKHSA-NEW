@@ -14,9 +14,11 @@ ViewData["Title"] = "Log In";
 
       <span asp-validation-for="Password" class="text-danger"></span>
       <input asp-for="Password" class="input-box" type="password" placeholder="Password" />
-
+      
+      <div style="display: flex; align-items: center; gap: 10px; margin-top: 15px;">
       <label asp-for="RememberMe">Remember Me</label>
       <input asp-for="RememberMe" type="checkbox" id="RememberMe" />
+      </div>
 
       <button class="input-button" type="submit">Log In</button>
     </form>
