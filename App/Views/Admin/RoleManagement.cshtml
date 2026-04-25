@@ -1,6 +1,5 @@
 @using App.Models
-@using App.Shared
-@model Paginated<(User user, IList<string> roles)>
+@model List<RoleManagementViewModel>
 @{
     ViewData["Title"] = "Role Management";
 }
@@ -21,25 +20,25 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model.Items)
+            @foreach (var user in Model)
             {
                 <tr>
-                    <td>@item.user.Id</td>
-                    <td>@item.user.Forename @item.user.Surname</td>
-                    <td>@item.user.Email</td>
+                    <td>@user.Id</td>
+                    <td>@user.Name</td>
+                    <td>@user.Email</td>
 
                     <td>
-                        <input form="role_@item.user.Id" type="radio" name="role" value="User" checked="@item.roles.Contains("User")" />
+                        <input form="role_@user.Id" type="radio" name="role" value="User" checked="@user.IsUser" />
                     </td>
                     <td>
-                        <input form="role_@item.user.Id" type="radio" name="role" value="Approver" checked="@item.roles.Contains("Approver")" />
+                        <input form="role_@user.Id" type="radio" name="role" value="Approver" checked="@user.IsApprover" />
                     </td>
                     <td>
-                        <input form="role_@item.user.Id" type="radio" name="role" value="Admin" checked="@item.roles.Contains("Admin")" />
+                        <input form="role_@user.Id" type="radio" name="role" value="Admin" checked="@user.IsAdmin" />
                     </td>
                     <td>
-                        <form id="role_@item.user.Id" asp-action="RoleManagement" method="post">
-                            <input type="hidden" name="id" value="@item.user.Id" />
+                        <form id="role_@user.Id" asp-action="RoleManagement" method="post">
+                            <input type="hidden" name="id" value="@user.Id" />
                             <button class="input-button" type="submit">Submit Changes</button>
                         </form>
                     </td>
