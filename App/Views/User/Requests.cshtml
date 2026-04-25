@@ -45,7 +45,7 @@
             <td>@request.AppTime</td>
             <td>@request.AppExp</td>
             <td>
-            <form asp-action="Extension" method="post">
+            <form asp-action="Extension" asp-method="post">
             <input type="hidden" name="RequestId" value="@request.Id"/>
             <input type="hidden" name="DatasetId" value="@request.DatasetId"/>
             <input type="hidden" name="AccessLevel" value="@request.AccessLevel"/>
