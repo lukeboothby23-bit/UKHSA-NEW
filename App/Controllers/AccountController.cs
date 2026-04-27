@@ -42,7 +42,7 @@ public class AccountController : Controller
         {
             await _signInManager.SignInAsync(user, isPersistent: model.RememberMe);
             await _userManager.AddToRoleAsync(user,"User");
-            return Redirect("/");
+            return Redirect("/User/Home");
         }
 
         foreach (var error in result.Errors)
