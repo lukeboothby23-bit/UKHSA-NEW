@@ -44,10 +44,41 @@ public class AdminController : Controller
     }
 
 
-
-    public IActionResult RoleManagement()
+    [HttpGet]
+    public async Task<IActionResult> RoleManagement()
     {
-        return View();
+        var users = _userManager.Users.ToList();
+        var model = new List<RoleManagementViewModel>();
+
+        foreach (var user in users)
+        {
+            model.Add(new RoleManagementViewModel
+            {
+                Id = user.Id,
+                Name = user.Forename + " " + user.Surname,
+                Email = user.Email ?? "",
+                IsUser = await _userManager.IsInRoleAsync(user, "User"),
+                IsApprover = await _userManager.IsInRoleAsync(user, "Approver"),
+                IsAdmin = await _userManager.IsInRoleAsync(user, "Admin")
+            });
+        }
+        return View(model);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> RoleManagement(string id, string role)
+    {
+        var user = await _userManager.FindByIdAsync(id);
+
+        if (user == null)
+            return RedirectToAction("RoleManagement");
+
+        var currentRoles = await _userManager.GetRolesAsync(user);
+        await _userManager.RemoveFromRolesAsync(user, currentRoles);
+
+        await _userManager.AddToRoleAsync(user, role);
+
+        return RedirectToAction("RoleManagement");
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

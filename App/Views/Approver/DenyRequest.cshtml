@@ -1,3 +1,6 @@
+@using Microsoft.AspNetCore.Authorization.Infrastructure
+@using App.Models
+@model Request
 @{
     ViewData["Title"] = "Deny Requests";
 }
@@ -7,11 +10,11 @@
     <div class="login-container">
         <h1> Deny Request </h1>
             <form asp-action="DenyRequest" method="post">
-            <input type="hidden" name="requestId" value="@Model" />
+            <input type="hidden" name="requestId" value="@Model.Id" />
 
-                <label> Reason for Rejection</label>
+                <label>Reason for Rejection</label>
                 <br />
-                <input type="text" name="reason"/>
+                <input type="text" id="reason" name="reason"/>
                 <br />
                 <button type="submit" class="input-button">Submit</button>
             </form>
