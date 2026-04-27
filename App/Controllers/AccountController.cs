@@ -42,7 +42,7 @@ public class AccountController : Controller
         {
             await _signInManager.SignInAsync(user, isPersistent: model.RememberMe);
             await _userManager.AddToRoleAsync(user,"User");
-            return Redirect("/");
+            return RedirectToAction("Home", "User");
         }
 
         foreach (var error in result.Errors)
@@ -64,7 +64,8 @@ public class AccountController : Controller
 
         var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
 
-        if (result.Succeeded) return Redirect("/");
+        if (result.Succeeded) 
+        return RedirectToAction("Home", "User");
 
         ModelState.AddModelError("", "Incorrect username or password");
         return View(model);

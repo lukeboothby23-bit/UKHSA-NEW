@@ -110,31 +110,27 @@ public class UserController : Controller
         var userId = _userManager.GetUserId(User);
         var dataset = await _context.Datasets.FindAsync(DatasetId);
 
+        if (AccessLevel == 0)
+        {
+            var approval = _context.Approvals.Where(a=> a.RequestId == RequestId)
+            .First();
+
+            approval.Expires = approval.Expires?.AddMonths(6);
+
+            await _context.SaveChangesAsync();
+        }
+        else {
         var request = new Request
         {
             DatasetId = DatasetId,
             UserId = userId,
+            Reason = "Extension Request",
             Timestamp = DateTime.UtcNow
         };
 
         _context.Requests.Add(request);
         await _context.SaveChangesAsync();
-        
-
-        if (AccessLevel == 0)
-        {
-            var approval = new Approval
-            {
-                Request = request,
-                Approved = true,
-                RejectedReason = "",
-                Timestamp = DateTime.UtcNow,
-                Expires = DateTime.UtcNow.AddMonths(6)
-            };
-            _context.Approvals.Add(approval);
-            await _context.SaveChangesAsync();
         }
-
         return RedirectToAction("Requests");
     }
 
