@@ -13,21 +13,13 @@
     <input asp-for="Title" class="input-box" />
 
     <h3>Access Type</h3>
-
-    <div class="radio-button">
-    <div class="radio-item">
     <input type="radio" asp-for="AccessLevel" value="1" />
     <label for="sensitive">Sensitive</label>
-    </div>
-
-    <div class="radio-item">
     <input type="radio" asp-for="AccessLevel" value="0" />
     <label for="non-sensitive">Non-sensitive</label>
-    </div>
-    </div>
 
     <h3>Description</h3>
-    <textarea class="text-area" asp-for="Description" rows="4" cols="41"></textarea>
+    <textarea asp-for="Description" rows="4" cols="41"></textarea>
     
     <button class="input-button" type="submit" style="margin-top: 2em;">Add Dataset</button>
     </form>

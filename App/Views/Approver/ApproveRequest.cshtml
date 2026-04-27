@@ -1,3 +1,6 @@
+@using App.Models
+@using App.Shared
+@model Paginated<ApproveRequestDto>
 @{
     ViewData["Title"] = "Approve Requests Page";
 }
@@ -11,6 +14,7 @@
                 <tr>
                     <th>Dataset Requested</th>
                     <th>User</th>
+                    <th>Reason</th>
                     <th>Date Requested</th>
                     <th colspan="2">Action</th>
                 </tr>
@@ -20,7 +24,8 @@
                 {
                     <tr>
                         <td>@request.Title</td>
-                        <td>@request.User</td>
+                        <td>@request.Username</td>
+                        <td>@request.Reason</td>
                         <td>@request.Timestamp</td>
 
                         <td>
@@ -31,29 +36,39 @@
                         </td>
 
                         <td>
-                            <form asp-action="DenyRequest" method="get">
+                            <form asp-action="DenyRequest" method="post">
                                 <input type="hidden" name="requestId" value="@request.Id" />
-                                <button type="submit" class="input-button">Deny</button>
-                            </form>
-                        </td>
-                    </tr>
+                                <button type="submit" class="deny-button"">Deny</button>
+                                        </form>
+                                    </td>
+                                </tr>
 
                 }
             </tbody>
         </table>
-        <div>
+    <div class=" pagination">
+                                @if (Model.CurrentPage > 1)
+                                {
+                                    <a asp-action="Requests" asp-route-page="@(Model.CurrentPage - 1)">Previous</a>
+                                }
 
-            @if (Model.CurrentPage > 1)
-            {
-                <a asp-action="ApproveRequest" asp-route-page="@(Model.CurrentPage - 1)">Previous</a>
-            }
+                                @for (int i = 1; i <= Model.TotalPages; i++)
+                                {
+                                    if (i == Model.CurrentPage)
+                                    {
+                                        <strong>@i</strong>
+                                    }
+                                    else
+                                    {
+                                        <a asp-action="Requests" asp-route-page="@i">@i</a>
 
-            <span>Page @Model.CurrentPage of @Model.TotalPages</span>
+                                    }
+                                }
 
-            @if (Model.CurrentPage < Model.TotalPages)
-            {
-                <a asp-action="ApproveRequest" asp-route-page="@(Model.CurrentPage + 1)">Next</a>
-            }
-        </div>
+                                @if (Model.CurrentPage < Model.TotalPages)
+                                {
+                                    <a asp-action="Requests" asp-route-page="@(Model.CurrentPage + 1)">Next</a>
+                                }
     </div>
+</div>
 </div>
