@@ -417,11 +417,21 @@ thead tr:last-of-type {
   margin: 0 5px;
 }
 
-.pagination a,
-strong {
-  text-decoration: none;
-  background-color: var(--backgound-colour);
-  color: var(--button-border);
+.pagination a{
+  color: #005EB8;
+  text-decoration: underline;
+  display: inline-block;
+  padding: 8px 16px;
+  margin: 0px 5px;
+  box-shadow: none;
+  transition: box-shadow 0.4s, background-color 0.4s;
+}
+
+.pagination strong {
+  background-color: #005EB8;
+  color: #ffffff;
+  text-decoration: underline;
+  display: inline-block;
   padding: 8px 16px;
   margin: 0px 5px;
   box-shadow: none;
@@ -429,15 +439,46 @@ strong {
 }
 
 .pagination a:hover {
-  background-color: var(--pagination-hover);
+  text-decoration: underline;
+  background-color: #E8EDEE;
+  color: #0072CE;
   box-shadow: 0px 3px 3px var(--shadow);
   transition: box-shadow 0.2s, background-color 0.2s;
 }
 
 .pagination .active a,
 .pagination .active strong {
-  background-color: var(--button-hover);
+  background-color: #005EB8;
   color: white;
   box-shadow: 0px 3px 3px var(--shadow);
+  transition: box-shadow 0.2s, background-color 0.2s;
+}
+
+.deny-button {
+  letter-spacing: 0.5px;
+  display: block;
+  margin: auto;
+  width: auto;
+  padding: 10px;
+  background-color: #8A1538;
+  color: white;
+  border: none;
+  border-bottom: solid 2px var(--button-border);
+  cursor: pointer;
+  box-shadow: none;
+  transition: box-shadow 0.4s, background-color 0.4s;
+}
+
+.deny-button:hover {
+  letter-spacing: 0.5px;
+  display: block;
+  margin: auto;
+  width: auto;
+  padding: 10px;
+  background-color: #751330;
+  color: white;
+  border: none;
+  border-bottom: solid 2px var(--button-border);
+  cursor: pointer;
   transition: box-shadow 0.2s, background-color 0.2s;
 }

@@ -95,6 +95,11 @@ VALUES
     'User'
 );
 
+INSERT INTO "AspNetRoles" ("Id", "Name", "NormalizedName", "ConcurrencyStamp")
+VALUES
+  (gen_random_uuid()::text, 'User', 'USER', gen_random_uuid()::text),
+  (gen_random_uuid()::text, 'Approver', 'APPROVER', gen_random_uuid()::text),
+  (gen_random_uuid()::text, 'Admin', 'ADMIN', gen_random_uuid()::text);
 
 ALTER DATABASE "UKHSA"
 SET log_statement = "all";

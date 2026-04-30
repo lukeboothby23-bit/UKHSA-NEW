@@ -1,10 +1,16 @@
+@using App.Models
+@model List<RoleManagementViewModel>
 @{
-  ViewData["Title"] = "Role Management";
+    ViewData["Title"] = "Role Management";
 }
 
 <div>
+<<<<<<< HEAD
 
     <h1> Manage Roles</h1>
+=======
+    <h1>Manage Roles</h1>
+>>>>>>> d1ca809b786849dd1488b52310a1a53d7abaea4d
 
     <table>
         <thead>
@@ -19,31 +25,32 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <form>
-                <td>1</td>
-                
-                <td>Luke Boothby</td>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>@user.Id</td>
+                    <td>@user.Name</td>
+                    <td>@user.Email</td>
 
-                <td>luke@luke.com</td>
-                
-                <td>
-                    <input id="admin" type="checkbox" />
-                </td>
+                    <td>
+                        <input form="role_@user.Id" type="radio" name="role" value="User" checked="@user.IsUser" />
+                    </td>
+                    <td>
+                        <input form="role_@user.Id" type="radio" name="role" value="Approver" checked="@user.IsApprover" />
+                    </td>
+                    <td>
+                        <input form="role_@user.Id" type="radio" name="role" value="Admin" checked="@user.IsAdmin" />
+                    </td>
+                    <td>
+                        <form id="role_@user.Id" asp-action="RoleManagement" method="post">
+                            <input type="hidden" name="id" value="@user.Id" />
+                            <button class="input-button" type="submit">Submit Changes</button>
+                        </form>
+                    </td>
 
-                <td>
-                    <input id="approver" type="checkbox" />
-                </td>
-
-                <td>
-                    <input id="user" type="checkbox" />
-                </td>
-                
-                <td>
-                    <button class="input-button" type="submit">Submit Changes</button>
-                </td>
-                </form>
-            </tr>
+                </tr>
+            }
+>>>>>>> d1ca809b786849dd1488b52310a1a53d7abaea4d
         </tbody>
     </table>
 </div>

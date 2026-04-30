@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using App.Models;
 using App.Shared;
-using App.Controllers;
+using System.Threading.Tasks;
 
 namespace App.Controllers;
 
@@ -25,7 +25,7 @@ public class UserController : Controller
         return View("Home");
     }
 
-    public IActionResult Requests(int page = 1, int perPage = 20)
+    public IActionResult Requests(int page = 1, int perPage = 5)
     {
 
         var UserRequests = (from r in _context.Requests
@@ -33,22 +33,27 @@ public class UserController : Controller
                             join a in _context.Approvals on r.Id equals a.RequestId into Approvals
                             from a in Approvals.DefaultIfEmpty()
                             where r.UserId == _userManager.GetUserId(User)
-                            orderby r.Timestamp
+                            orderby r.Timestamp descending
                             select new RequestsDto
                             {
+                                Id = r.Id,
+                                DatasetId = d.Id,
+                                AccessLevel = d.AccessLevel,
+                                
                                 Title = d.Title,
-                                Approved = a!= null ? a.Approved : false,
-                                Reason = a != null ? a.RejectedReason : "Pending",
+                                Approved = a != null ? a.Approved : null,
+                                Reason = a != null ? (a.Approved ? "" : a.RejectedReason) : "Pending",
                                 ReqTime = r.Timestamp,
-                                AppTime = a.Timestamp != null ? a.Timestamp.ToString("dd/MM/yyyy HH:mm:ss") : "Pending Approval",
-                                AppExp = a.Expires != null ? a.Expires.ToString("dd/MM/yyyy HH:mm:ss") : String.Empty,
-                                ViewDataset = r.Approval != null ? String.Empty : "disabled" 
+                                AppTime = a != null ? a.Timestamp : null,
+                                AppExp = (a != null && a.Approved == true)? a.Expires : null,
+                                ViewDataset = (a != null && a.Approved == true) ? String.Empty : "disabled"
                             }).ToList();
-        
+
         int totalItems = UserRequests.Count();
         Console.WriteLine(totalItems);
 
-        var model = new Paginated<RequestsDto> {
+        var model = new Paginated<RequestsDto>
+        {
             CurrentPage = page,
             PerPage = perPage,
             TotalItems = totalItems,
@@ -66,17 +71,69 @@ public class UserController : Controller
     }
 
     [HttpPost]
-        public IActionResult RequestDocument(int DatasetId, int AccessLevel, string Purpose)
+    public async Task<IActionResult> RequestDocument(int DatasetId, string Purpose)
     {
+        var userId = _userManager.GetUserId(User);
+        var dataset = await _context.Datasets.FindAsync(DatasetId);
+
         var request = new Request
         {
             DatasetId = DatasetId,
-            UserId = _userManager.GetUserId(User),
+            UserId = userId,
+            Reason = Purpose,
+            Timestamp = DateTime.UtcNow
+        };
+        _context.Requests.Add(request);
+        await _context.SaveChangesAsync();
+        
+
+        if (dataset.AccessLevel == 0)
+        {
+            var approval = new Approval
+            {
+                Request = request,
+                Approved = true,
+                RejectedReason = "",
+                Timestamp = DateTime.UtcNow,
+                Expires = DateTime.UtcNow.AddMonths(6)
+            };
+            _context.Approvals.Add(approval);
+            await _context.SaveChangesAsync();
+        }
+
+        return RedirectToAction("Requests");
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Extension(int RequestId, int DatasetId, int AccessLevel)
+    {
+        var userId = _userManager.GetUserId(User);
+        var dataset = await _context.Datasets.FindAsync(DatasetId);
+
+        var request = new Request
+        {
+            DatasetId = DatasetId,
+            UserId = userId,
             Timestamp = DateTime.UtcNow
         };
 
         _context.Requests.Add(request);
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
+        
+
+        if (AccessLevel == 0)
+        {
+            var approval = new Approval
+            {
+                Request = request,
+                Approved = true,
+                RejectedReason = "",
+                Timestamp = DateTime.UtcNow,
+                Expires = DateTime.UtcNow.AddMonths(6)
+            };
+            _context.Approvals.Add(approval);
+            await _context.SaveChangesAsync();
+        }
 
         return RedirectToAction("Requests");
     }
