@@ -115,8 +115,6 @@ public class ApproverController : Controller
         }
         _context.SaveChanges();
 
-        _context.SaveChanges();
-
         return RedirectToAction("ApproveRequest");
     }
 
